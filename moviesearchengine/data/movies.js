@@ -2,17 +2,17 @@
 import axios from 'axios';
 
 export const getMoviessearch = async (title) => {
-  const { data } = await axios.get(`http://www.omdbapi.com/?apikey=CS546&s=${title}`);
+  const { data } = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=[APIKeyhere]&query=${title}`);
   return data;
 }
 
 export const getMoviessearch2 = async (title, num) => {
-  const { data } = await axios.get(`http://www.omdbapi.com/?apikey=CS546&s=${title}&page=${num}`);
+  const { data } = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${title}&api_key=[APIKeyhere]&page=${num}`);
   return data;
 }
 
 export const getMoviesId = async (id) => {
-  const { data } = await axios.get(`http://www.omdbapi.com/?apikey=CS546&i=${id}`);
+  const { data } = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=[APIKeyhere]&with_id=${id}`);
   return data;
 }
 
@@ -43,7 +43,7 @@ export const searchMoviesByTitle = async (title) => {
       iterator += 1;
     }
     for (let movie of data2){
-      let posterval = movie.Poster;
+      let posterval = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
       if (posterval === "N/A"){
         movie.truthval = false;
       }
