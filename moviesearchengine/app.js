@@ -1,6 +1,5 @@
 //Here is where you'll set up your server as shown in lecture code
 import express from 'express';
-import * as movies from './data/movies.js'
 const app = express();
 import configRoutes from './routes/index.js';
 import exphbs from 'express-handlebars';
