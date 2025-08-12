@@ -2,17 +2,17 @@
 import axios from 'axios';
 
 export const getMoviessearch = async (title) => {
-  const { data } = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=[APIKeyhere]&query=${title}`);
+  const { data } = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${title}`);
   return data;
 }
 
 export const getMoviessearch2 = async (title, num) => {
-  const { data } = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${title}&api_key=[APIKeyhere]&page=${num}`);
+  const { data } = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${title}&api_key=${API_KEY}&page=${num}`);
   return data;
 }
 
 export const getMoviesId = async (id) => {
-  const { data } = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=[APIKeyhere]&with_id=${id}`);
+  const { data } = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_id=${id}`);
   return data;
 }
 
