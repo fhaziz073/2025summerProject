@@ -25,6 +25,22 @@ export const getMovieByIdFromAPI = async (id) => {
   return data;
 };
 
+export const getMovieGenresFromAPI = async () => {
+  const API_KEY = process.env.API_KEY;
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
+  );
+  return data;
+};
+
+export const getListOfMostPopularMovies = async () => {
+  const API_KEY = process.env.API_KEY;
+  const {data} = await axios.get(
+    `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=${API_KEY}`
+  )
+  return data
+}
+
 export const searchMoviesByTitle = async (title) => {
   /*Function to make an axios call to search the api and return up to 50 movies matching the title param
   API endpoint: http://www.omdbapi.com/?apikey=CS546&s={title}
@@ -39,7 +55,7 @@ export const searchMoviesByTitle = async (title) => {
   if (str.length === 0) {
     throw "Given search term is empty";
   }
-  let movieData = await getMovieByIdFromAPI(str);
+  let movieData = await getMoviesByTitleFromAPI(str);
   let movieSearchResults = movieData.results;
   let num = 0;
   if (movieData.total_results > 0) {
@@ -63,6 +79,25 @@ export const searchMoviesByTitle = async (title) => {
   throw `We're sorry, but no results were found for ${str}.`;
 };
 
+export const getRecommendedMoviesWithGenre = async (movieGenreId) =>
+{
+  if (!movieGenreId && movieGenreId !== 0) {
+    throw "No id for movie genre given";
+  }
+  if (typeof movieGenreId !== "number") {
+    throw "Given movie genre id is not a number";
+  }
+  const popularMovies = (await getListOfMostPopularMovies()).results;
+  let recommendedMoviesByGenre = [];
+  for(let movie of popularMovies)
+  {
+    if(movie.genre_ids.includes(movieGenreId))
+    {
+      recommendedMoviesByGenre.push(movie)
+    }
+  }
+  return popularMovies;
+}
 export const getMovieById = async (id) => {
   /*Function to make an axios call to the the api matching the id
  API endpoint: http://www.omdbapi.com/?apikey=CS546&i={id}
